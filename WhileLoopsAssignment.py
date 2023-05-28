@@ -16,7 +16,7 @@ while Count <= 5:
             #Validate that the employee ID is a number that is 7 or less digits long
             validate_employee_ID = employee_ID.isdigit()
             if len(employee_ID) > 7 or validate_employee_ID == False:
-                validate_employee_ID_2 = False
+                validate_employee_ID_2 == False
             else:
                 break
         except:
@@ -29,22 +29,21 @@ while Count <= 5:
             #Obtain the employee's name
             employee_name = input("Please enter your first name: ")
 
-            #Validate that the employee's name contains only letters from A-Z
-            validate_employee_name = employee_name.isalpha()
-
             #Declare the forbidden characters for the employee's name
             forbidden_characters_name = ['!', '"', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+' ',', '<', '>', '/', '?', ';', ':', '[', ']', '{', '}','\\']
 
             #Test the employee's name for any forbidden characters using a for loop
-            forbidden_characters_found = False
-            for character in forbidden_characters_name:
-                if character in employee_name:
-                    forbidden_characters_found = True
-            #If the employee's name contains any forbidden characters, break the loop
-            if forbidden_characters_found == True or validate_employee_name == False:
+            if employee_name:
+                for character in employee_name:
+                    if character in forbidden_characters_name:
+                        forbidden_characters_found = True
+                    
+            #If the employee's name contains any forbidden characters or anything else other than numbers, reprompt the user, otherwise break the loop
+            if forbidden_characters_found == True:
                 validate_employee_name_2 = False
-            else:
                 break
+            else:
+                validate_employee_name_2 = True
         except:
             print("Employee name was not formatted correctly. Please try again. ")
     
@@ -119,7 +118,7 @@ while Count <= 5:
         continue
     
     if len(employee_data) == 5:
-        print("You have reached the maximum number of employees that can be entered."
+        print("You have reached the maximum number of employees that can be entered.")
 
 #Print the dictionary
 print("Here are the employee(s) that you entered into the database: ")
