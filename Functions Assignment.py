@@ -1,98 +1,93 @@
+#Define a function to determine if the employee ID is correct
+def employee_ID_correct(employee_ID):
+    return len(employee_ID) <= 7 and employee_ID.isdigit()
 
-#Create an empty list to store the employee's information
-employee_data = []
+#Define a function to determine if the employee's name is correct
+def employee_name_correct(employee_name):
+    #Declare the forbidden characters for the employee's name
+    forbidden_characters_name = ['!', '"', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+', ',', '<', '>', '/', '?', ';', ':', '[', ']', '{', '}']
+    #Validate that the employee's name is correct
+    for character in forbidden_characters_name:
+        if character in employee_name:
+            return False
+    return True
 
-#Define the employee ID
+#Define a function to determine if the employee's email address is correct
+def employee_email_correct(employee_email):
+    #Declare the forbidden characters for the employee's email address
+    forbidden_characters_email = ['!', '"', "'", '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', ',', '<', '>', '/', '?', ';', ':', '[', ']', '{', '}', '\\']
+    #Validate that the employee's email address is correct
+    for character in forbidden_characters_email:
+        if character in employee_email:
+            return False
+    return True
+
+#Define a function to determine if the employee's address is correct
+def employee_address_correct(employee_address):
+    #Declare the forbidden characters for the employee's address
+    forbidden_characters_address = ['!', '"', "'", '@', '$', '%', '^', '&', '*', '_', '=', '+', '<', '>', '?', ';', ':', '[', ']', '{', '}']
+    #Validate that the employee's address is correct
+    for character in forbidden_characters_address:
+        if character in employee_address:
+            return False
+    return True
+
+#Define a function to obtain the employee's ID
 def obtain_employee_ID():
     while True:
         try:
-            #Obtain employee ID from user
             employee_ID = input("Please enter your employee ID: ")
-            #Validate that the employee ID is correct
-            if len(employee_ID) <= 7 and employee_ID.isdigit():
-                #If the employee ID is correct, return the employee ID
+            if employee_ID_correct(employee_ID):
                 return employee_ID
             else:
-                #If the employee ID is incorrect, provide an error message and prompt the user to enter their employee ID again
                 print("Employee ID was not formatted correctly. Please try again.")
         except:
             print("Employee ID was not formatted correctly. Please try again.")
 
-#Define the employee's name
+#Define a function to obtain the employee's name
 def obtain_employee_name():
     while True:
-            #Obtain the employee's name
-            employee_name = input("Please enter your first name: ")
-            #Declare the forbidden characters for the employee's name
-            forbidden_characters_name = ['!', '"', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+' ',', '<', '>', '/', '?', ';', ':', '[', ']', '{', '}','\\']
-            #Validate that the employee's name is correct
-            if employee_name:
-                if any(character in forbidden_characters_name for character in employee_name):
-                    #If the employee's name is incorrect, provide an error message and prompt the user to enter their name again
-                    print("Employee name was not formatted correctly. Please try again. ")
-                else:
-                    #If the employee's name is correct, return the employee's name
-                    return employee_name
-            else:
-                print("Employee name was not formatted correctly. Please try again. ")
-                
-#Define the employee's email address
+        employee_name = input("Please enter your employee name: ")
+        if employee_name_correct(employee_name):
+            return employee_name
+        else:
+            print("Employee name was not formatted correctly. Please try again. ")
+            
+#Define a function to obtain the employee's email address
 def obtain_employee_email():
     while True:
-            #Obtain the employee's email address
-            employee_email = input("Please enter your email address: ")
-            Validate_Employee_Email = False
-            #Declare the forbidden characters for the employee's email address
-            forbidden_characters_email = ['!', '"', '#', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+' ',', '<', '>', '/', '?', ';', ':', '[', ']', '{', '}','\\']
-            #Validate that the employee's email address is correct
-            if employee_email:
-                if any(character in forbidden_characters_email for character in employee_email):
-                    #If the employee's email address is incorrect, provide an error message and prompt the user to enter their email address again
-                    print("Employee email was not formatted correctly. Please try again. ")
-                else:
-                    #If the employee's email address is correct, return the employee's email address
-                    return employee_email
-            else:
-                print("Employee email was not formatted correctly. Please try again. ")
+        employee_email = input("Please enter your email address: ")
+        if employee_email_correct(employee_email):
+            return employee_email
+        else:
+            print("Employee email was not formatted correctly. Please try again. ")
             
-#Define the employee's home address
+#Define a function to obtain the employee's address
 def obtain_employee_address():
     while True:
-        try:
-            #Obtain the employee's home address
-            employee_address = input("Please enter the employee's home address(optional): ")
-            #Declare the forbidden characters for the employee's home address
-            forbidden_characters_address = ['!', '"', "'", '@', '$', '%', '^', '&', '*', '_', '=', '+', '<', '>',  '?', ';', ':', '[', ']', '{', '}', '\\']
-            #Validate that the employee's home address is correct
-            if employee_address:
-                if any(character in forbidden_characters_address for character in employee_address):
-                    #If the employee's home address is incorrect, provide an error message and prompt the user to enter their home address again
-                    print("Employee address was not formatted correctly. Please try again. ")
-                else:
-                    #If the employee's home address is correct, return the employee's home address
-                    return employee_address
-        except:
+        employee_address = input("Please enter the employee's home address(optional): ")
+        if employee_address_correct(employee_address):
+            return employee_address
+        else:
             print("Employee address was not formatted correctly. Please try again. ")
-    
-#set increment count variable to 0
-Count = 0   
-    
-#Declare the employee dictionary limit
-while Count < 5:
-    #Call the obtain_employee_ID function
+
+#Create an empty list to store the employee's information
+employee_data = []
+
+#Declare a variable to count the number of employees entered into the system
+count = 0
+
+#Obtain the employee's information
+while count < 5:
     employee_ID = obtain_employee_ID()
-    #Call the obtain_employee_name function
     employee_name = obtain_employee_name()
-    #Call the obtain_employee_email function
     employee_email = obtain_employee_email()
-    #Call the obtain_employee_address function
     employee_address = obtain_employee_address()
     
     #Append employee data to the dictionary
     #If the employee's home address field was left blank or invalid, the if statement will be executed
     #If the employee's home address field was not left blank, the else statement will be executed
-    
-    if len(employee_address) == 0:
+    if employee_address == '':
         employee_data.append({"Employee ID": employee_ID,"Name": employee_name.title(), "Email": employee_email})
     else:
         employee_data.append({"Employee ID": employee_ID,"Name": employee_name.title(), "Email": employee_email, "Home Address": employee_address.title()})
@@ -105,7 +100,7 @@ while Count < 5:
         break
     else:
         enter_another_employee = "Y"
-        Count += 1
+        count += 1
         continue
 
 #Print the dictionary
