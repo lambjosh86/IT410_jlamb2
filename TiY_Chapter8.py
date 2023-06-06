@@ -35,21 +35,24 @@ def song_information(song_title, artist_name="Unknown"):
     return formatted_song_information
 
 #Call the function three times with one of the calls not passing an artist name
-song_information("The Middle", "Jimmy Eat World")
-song_information("Boulevard of Broken Dreams")
-song_information("Girlfriend", "Avril Lavigne")
+formatted_song_information = song_information("The Middle", "Jimmy Eat World")
+print(formatted_song_information)
+formatted_song_information = song_information("Boulevard of Broken Dreams")
+print(formatted_song_information)
+formatted_song_information = song_information("Girlfriend", "Avril Lavigne")
+print(formatted_song_information)
 
 #Problem 8-5
 #Re-define the function that accepts song information specific to song title and artist
 def song_information(song_title, artist_name="Unknown"):
     dictionary_item = {"title": song_title, "artist": artist_name}
-    return song_information
+    return dictionary_item
 
 #Define the function that prints song entries in a playlist
 def print_song_entries(playlist):
     print("The following songs are in the playlist: ")
     for song in playlist:
-        print(song)
+        print(song["title"] + " by " + song["artist"])
         
 #Create an empty playlist
 playlist = []
