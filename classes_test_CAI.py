@@ -32,7 +32,7 @@ class Dog(Pet):
         print(self.name + " is on their way to the vet!")
         
 class Cat(Pet):
-    """A simple class for representing a cat"""
+    """A simple class for representing a dog"""
     
     def __init__(self, name, age):
         """Initialize name and age variables/attributes for the cat"""
