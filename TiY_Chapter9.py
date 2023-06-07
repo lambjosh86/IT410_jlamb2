@@ -9,18 +9,18 @@ class Shirt_1():
 
     def print_size_and_color(self):
         """Print the size and color attributes"""
-        print("The shirt is a size " + self.size)
-        print("The shirt is " + self.color)
+        print("The size of the shirt is a " + self.size)
+        print("The color of the shirt is " + self.color)
         
 #Create an instance of the Shirt class and print the attributes
-shirt1 = Shirt_1("large", "blue")
+shirt1 = Shirt_1("Large", "Blue")
 print("The attributes of shirt one are: ")
 print(shirt1.size)
 print(shirt1.color)
 shirt1.print_size_and_color()
 
 #Create another instance of the Shirt class and print the attributes
-shirt2 = Shirt_1("medium", "red")
+shirt2 = Shirt_1("Medium", "Black")
 print("The attributes of shirt two are: ")
 print(shirt2.size)
 print(shirt2.color)
