@@ -1,191 +1,196 @@
 #Declare the Person class
 class Person():
-    """This class will extend into the Student and Instructor classes"""
-    def __init__(self, name, email_address, individual_ID):
-        """Initialize name, email_address, and individual_ID attributes of the Person class"""
+    """Define the Person class"""
+    def __init__(self, name, email_address):
+        """Initialize the attributes of the Person class"""
         self.name = name
         self.email_address = email_address
-        self.individual_ID = individual_ID
 
-#Declare the Student class which inherits from the Person class and stores the student records
+#Declare the Student class
 class Student(Person):
-    """This will store the student's records"""
+    """Define the Student class"""
     def __init__(self, name, email_address, student_ID, program_of_study):
         """Initalize the attributes of the Student class"""
-        super().__init__(name, email_address, student_ID)
+        super().__init__(name, email_address)
+        self.student_ID = student_ID
         self.program_of_study = program_of_study
-    def displayInformation(self):
-        """This will display the student's information"""
-        print(f"{self.name.title()}'s email address is {self.email_address}. Their student ID is {self.individual_ID}. Their program of study is {self.program_of_study}.")
 
-#Declare the Instructor class which inherits from the Person class and stores the instructor records
+    def __str__(self):
+        """This method is defined to display the student's information"""
+        return f"Name: {self.name.title()}\nEmail: {self.email_address}\nStudent ID Number: {self.student_ID}\nProgram of Study: {self.program_of_study.title()}"
+
+#Declare the Instructor class
 class Instructor(Person):
-    """This will store the instructor's records"""
+    """Define the Instructor class"""
     def __init__(self, name, email_address, instructor_ID, institution_graduated_from, highest_degree):
         """Initialize the attributes of the Instructor class"""
-        super().__init__(name, email_address, instructor_ID)
+        super().__init__(name, email_address)
+        self.instructor_ID = instructor_ID
         self.institution_graduated_from = institution_graduated_from
         self.highest_degree = highest_degree
-    def displayInformation(self):
-        """This will display the instructor's information"""
-        print(f"{self.name.title()}'s email address is {self.email_address}. Their instructor ID is {self.individual_ID}. The last institution they graduated from is {self.institution_graduated_from} and their highest degree is {self.highest_degree}.")
+        
+    def __str__(self):
+        """This method is defined to display the instructor's information"""
+        return f"Name: {self.name.title()}\nEmail: {self.email_address}\nInstructor ID Number: {self.instructor_ID}\nLast Institution: {self.institution_graduated_from.title()}\nHighest Degree Earned: {self.highest_degree.title()}"
  
 #Declare the Validator class which will utilize different methods to validate the information entered by the user
 class Validator():
     def __init__(self):
         """This constructor method is empty as there are no real attributes"""
         
+    #Declare the validateEmail method which will validate the email address entered by the user
     def validateEmail(self, email):
         """This method will validate the email address entered by the user"""
         forbidden_characters_email = ['!', '"', '#', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+' ',', '<', '>', '/', '?', ';', ':', '[', ']', '{', '}','\\']
-        forbidden_characters_found = False
         #Check if the email address contains any forbidden characters
         for character in forbidden_characters_email:
             if character in email:
-                forbidden_characters_found = True
-                break
-        #If forbidden characters are found, return False. Otherwise, return True
-        if forbidden_characters_found == True or len(email) == 0:
-            return False
-        else:
-            return True
-        
-    def validateIndividualID(self, individual_ID, maxLength):
-        """This method will validate the individual ID entered by the user"""
-        #If the individual ID includes anything other than numbers or is longer than the max length of 5, return False. Otherwise, return True
-        numerical_digit_test = individual_ID.isdigit()
-        if numerical_digit_test == False or len(individual_ID) > maxLength:
-            return False
-        else:
-            return True
+                return False
+        return True
+    
+    def validateStudentID(self, student_ID):
+        #Check if the student ID contains only digits and is less than or equal to 7 digits. If it does, return True. Otherwise, return False
+        return student_ID.isdigit() and len(student_ID) <= 7
+    
+    def validateInstructorID(self, instructor_ID):
+        #Check if the instructor ID contains only digits and is less than or equal to 5 digits. If it does, return True. Otherwise, return False
+        return instructor_ID.isdigit() and len(instructor_ID) <= 5
         
     def validateName(self, name):
         """This method will validate the name entered by the user"""
-        forbidden_characters_name = ['!', '"', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+' ',', '<', '>', '/', '?', ';', ':', '[', ']', '{', '}','\\','0','1','2','3','4','5','6','7','8','9']
+        forbidden_characters_name = ['!', '"', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+' ',', '<', '>', '/', '?', ';', ':', '[', ']', '{', '}','\\']
         forbidden_characters_found = False
         #Check if the name contains any forbidden characters
         for character in forbidden_characters_name:
             if character in name:
-                forbidden_characters_found = True
-                break
-        #If forbidden characters are found, return False. Otherwise, return True
-        if forbidden_characters_found == True or len(name) == 0:
-            return False
-        else:
+                return False
             return True
         
 #Delare the empty college records list
 college_records = []
+#Declare the variable that will be used to continue the program
+continue_program = True
 
-#Declare the outer while loop control variable
-add_another_user = "yes"
-
-#Declare the outer while loop. If the user enters "q" after inputting a record, the loop will break
-while add_another_user != "q":
-    #Start the individualType loop which will continue until the user enters a valid input of either "S" for student or "I" for instructor
-    while True:
-        individualType = input("Are you entering a student or an instructor? Enter 'S' for student or 'I' for instructor: ").lower()
-        if individualType == "s" or individualType == "i":
-            break
+def studentInformation():
+    validator = Validator()
+    """This function will prompt the user to enter the student's information"""
+    valid_student_name = False
+    while not valid_student_name:
+        #Prompt the user to enter the student's name
+        student_name = input("Enter the student's name: ")
+        if validator.validateName(student_name):
+            #If the name is valid, break the loop
+            valid_student_name = True
         else:
-            print("The type of individual was not formatted correctly. Please try again.")
-            
-    #Delare a person object of the Validator class that will be used to validate the user's different inputs
-    person = Validator()
-    
-    #Start the name loop which will continue until the user enters a valid name
-    while True:
-        name = input("Enter the name of the individual: ")
-        #Call the validateName method of the Validator class to validate the name. If the name is false, we will prompt the user to enter a valid name, otherwise we will break the loop
-        valid_name = person.validateName(name)
-        if valid_name == False:
+            #If the name is invalid, print an error message and ask the user to enter a valid name
             print("The name was not formatted correctly. Please try again.")
+
+    valid_student_email = False
+    while not valid_student_email:
+        #Prompt the user to enter the student's email address
+        student_email = input("Enter the student's email address: ")
+        if validator.validateEmail(student_email):
+            #If the email address is valid, break the loop
+            valid_student_email = True
         else:
-            break
-    
-    #Start the email loop which will continue until the user enters a valid email address
-    while True:
-        email_address = input("Enter the email address of the individual: ")
-        #Call the validateEmail method of the Validator class to validate the email address. If the email address is false, we will prompt the user to enter a valid email address, otherwise we will break the loop
-        valid_email = person.validateEmail(email_address)
-        if valid_email == False:
+            #If the email address is invalid, print an error message and ask the user to enter a valid email address
             print("The email address was not formatted correctly. Please try again.")
+            
+    valid_student_ID = False
+    while not valid_student_ID:
+        #Prompt the user to enter the student's ID number
+        student_ID = input("Enter the student's ID number (7 or less digits): ")
+        if validator.validateStudentID(student_ID):
+            #If the student ID is valid, break the loop
+            valid_student_ID = True
         else:
-            break
+            #If the student ID is invalid, print an error message and ask the user to enter a valid student ID
+            print("The student ID was not formatted correctly. Please try again.")
+            
+    valid_program_of_study = False
+    while not valid_program_of_study:
+        #Prompt the user to enter the student's program of study
+        program_of_study = input("Enter the student's program of study: ")
+        #Check if the program of study is alphabetical. If it is, return True. Otherwise, return False
+        if program_of_study.isalpha():
+            #If the program of study is valid, break the loop
+            valid_program_of_study = True
+        else:
+            #If the program of study is invalid, print an error message and ask the user to enter a valid program of study
+            print("The program of study was not formatted correctly. Please try again.")
+        #Create a student object of the Student class and return it
+        return Student(student_name, student_email, student_ID, program_of_study)
     
-    #If the user is entering a student, we will prompt them to enter the student ID and program of study
-    if individualType == "s":
+def instructorInformation():
+    validator = Validator()
+    """This function will prompt the user to enter the instructor's information"""
+    valid_instructor_name = False
+    while not valid_instructor_name:
+        #Prompt the user to enter the instructor's name
+        instructor_name = input("Enter the instructor's name: ")
+        if validator.validateName(instructor_name):
+            #If the name is valid, break the loop
+            valid_instructor_name = True
+        else:
+            print("The name was not formatted correctly. Please try again.")
+            
+    valid_instructor_email = False
+    while not valid_instructor_email:
+        #Prompt the user to enter the instructor's email address
+        instructor_email = input("Enter the instructor's email address: ")
+        if validator.validateEmail(instructor_email):
+            #If the email address is valid, break the loop
+            valid_instructor_email = True
+        else:
+            print("The email address was not formatted correctly. Please try again.")
+            
+    valid_instructor_ID = False
+    while not valid_instructor_ID:
+        #Prompt the user to enter the instructor's ID number
+        instructor_ID = input("Enter the instructor's ID number (5 or less digits): ")
+        if validator.validateInstructorID(instructor_ID):
+            #If the instructor ID is valid, break the loop
+            valid_instructor_ID = True
+        else:
+            print("The instructor ID was not formatted correctly. Please try again.")
+            
+    valid_institution_graduated_from = False
+    while not valid_institution_graduated_from:
+        #Prompt the user to enter the last institution the instructor graduated from
+        institution_graduated_from = input("Enter the last institution the instructor graduated from: ")
+        if institution_graduated_from.isalpha():
+            #If the institution is valid, break the loop
+            valid_institution_graduated_from = True        
+        else:
+            print("The institution was not formatted correctly. Please try again.")
+            
+    valid_highest_degree_earned = False
+    while not valid_highest_degree_earned:
+        #Prompt the user to enter the highest degree the instructor has earned
+        highest_degree_earned = input("Enter the highest degree the instructor has earned: ")
+        #Check if the highest degree earned is alphabetical. If it is, return True. Otherwise, return False
+        if highest_degree_earned.isalpha():
+            #If the highest degree earned is valid, break the loop
+            valid_highest_degree_earned = True
+        else:
+            print("The highest degree earned was not formatted correctly. Please try again.")
+        #Create an instructor object of the Instructor class and return it
+        return Instructor(instructor_name, instructor_email, instructor_ID, institution_graduated_from, highest_degree_earned)
     
-        #Start the student ID loop which will continue until the user enters a valid student ID
-        while True:
-            student_ID = input("Enter the student ID of the individual: ")
-            #Call the validateIndividualID method of the Validator class to validate the student ID. If the student ID is false, we will prompt the user to enter a valid student ID, otherwise we will break the loop
-            valid_student_ID = person.validateIndividualID(student_ID, 7)
-            if valid_student_ID == False:
-                print("The student ID was not formatted correctly. Please try again.")
-            else:
-                break
+while continue_program:
+    """This function will prompt the user to enter a student or instructor's information, or to quit the program"""
+    user = input("Enter 's' to enter a student's information, 'i' to enter an instructor's information, or 'q' to quit the program: ")
+    if user.lower() == "s":
+        college_records.append(studentInformation())
+    elif user.lower() == "i":
+        college_records.append(instructorInformation())
+    elif user.lower() == "q":
+        #If the user enters "q", end the program
+        continue_program = False
         
-        #Start the program of study loop which will continue until the user enters a valid program of study
-        while True:
-            program_of_study = input("Enter the program of study of the student: ")
-            #If the program of study is empty, we will prompt the user to enter a valid program of study, otherwise we will break the loop
-            if len(program_of_study) == 0:
-                print("The program of study is required. Please try again.")
-            else:
-                break
-        
-        #Create a student object of the Student class after the user has entered all of the required information. Append the student object to the college records list and call the displayInformation method of the Student class to display the student's information
-        student = Student(name, email_address, student_ID, program_of_study)
-        college_records.append(student)
-        college_records.append(student.email_address)
-        college_records.append(student.student_ID)
-        college_records.append(student.program_of_study)
-        student.displayInformation()
-        
-    #If the user is entering an instructor, we will prompt them to enter the instructor ID, graduate institution, and highest degree
-    else:
-        #Start the instructor ID loop which will continue until the user enters a valid instructor ID
-        while True:
-            instructor_ID = input("Enter the instructor ID of the individual: ")
-            #Call the validateIndividualID method of the Validator class to validate the instructor ID. If the instructor ID is false, we will prompt the user to enter a valid instructor ID, otherwise we will break the loop
-            valid_instructor_ID = person.validateIndividualID(instructor_ID, 5)
-            if valid_instructor_ID == False:
-                print("The instructor ID was not formatted correctly. Please try again.")
-            else:
-                break
-        
-        #Start the last institution graduated from loop which will continue until the user enters a valid last institution graduated from
-        while True:
-            institution_graduated_from = input("Enter the last institution graduated from of the instructor: ")
-            #If the last institution graduated from is empty, we will prompt the user to enter a valid last institution graduated from, otherwise we will break the loop
-            if len(institution_graduated_from) == 0:
-                print("The last institution graduated from is required. Please try again.")
-            else:
-                break
-        
-        #Start the highest degree loop which will continue until the user enters a valid highest degree
-        while True:
-            highest_degree = input("Enter the highest degree of the instructor: ")
-            #If the highest degree is empty, we will prompt the user to enter a valid highest degree, otherwise we will break the loop
-            if len(highest_degree) == 0:
-                print("The highest degree is required. Please try again.")
-            else:
-                break
-        
-        #Create an instructor object of the Instructor class after the user has entered all of the required information. Append the instructor object to the college records list and call the displayInformation method of the Instructor class to display the instructor's information
-        instructor = Instructor(name, email_address, instructor_ID, institution_graduated_from, highest_degree)
-        college_records.append(instructor.name)
-        college_records.append(instructor.email_address)
-        college_records.append(instructor.instructor_ID)
-        college_records.append(instructor.institution_graduated_from)
-        college_records.append(instructor.highest_degree)
-        instructor.displayInformation()
-        
-        #If the user enters "q" after inputting a record, the loop will break. Otherwise, the user will be prompted to enter another record
-        enter_another_record = input("Enter another record? Enter 'q' to quit or any other key to continue: ").lower()
-        
-        #Display the college records list after the user has entered all of the records desired during the session
-        print("Here are the college records entered during this session: ")
-        for record in college_records:
-            print(record)
+#Display the college records list after the user has entered all of the records desired during the session
+print("Here are the college records entered during this session: ")
+for record in college_records:
+#Print a blank line for formatting purposes
+    print()
+    print(record)
