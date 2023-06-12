@@ -188,6 +188,8 @@ while continue_program:
         #If the user enters "q", end the program
         continue_program = False
         
+#Print a blank line for formatting purposes
+print()
 #Display the college records list after the user has entered all of the records desired during the session
 print("Here are the college records entered during this session: ")
 for record in college_records:
